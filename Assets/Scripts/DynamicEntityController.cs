@@ -5,6 +5,7 @@ using UnityEngine;
 public class DynamicEntityController : MonoBehaviour, ISetup<Entity>
 {
     private NetworkSyncEntityPosition _remotePosition;
+    private Entity _entity;
 
     private void Awake()
     {
@@ -13,6 +14,9 @@ public class DynamicEntityController : MonoBehaviour, ISetup<Entity>
 
     public void Setup(Entity value)
     {
+        _entity = value;
+        NetworkManager.Instance.Callbacks.BindTo(value, _entity);
+
         _remotePosition.Setup(value.position);
     }
 }

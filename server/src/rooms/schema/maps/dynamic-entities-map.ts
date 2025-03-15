@@ -7,17 +7,19 @@ export class DynamicEntitiesMap<T extends DynamicEntity = DynamicEntity>
   implements IUpdate
 {
   shouldUpdate(world: WorldState): boolean {
-    return this.entities.values.length > 0;
+    return this.entities.size > 0;
   }
 
   onUpdate(world: WorldState): void {
     for (const entity of this.entities.values()) {
       if (entity.shouldBeDeleted) {
-        this.entities.delete(entity.uuid);
+        if (this.entities.has(entity.uuid)) {
+          this.entities.delete(entity.uuid);
+        }
         continue;
       }
 
-      if (entity.shouldUpdate(world)) {
+      if (!entity.shouldUpdate(world)) {
         continue;
       }
 

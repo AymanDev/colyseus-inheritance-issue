@@ -37,8 +37,13 @@ export class MyRoom extends Room<WorldState> {
   }
 
   onUpdate() {
-    this.state.dynamicEntities.onUpdate(this.state);
-    this.state.players.onUpdate(this.state);
+    if (this.state.dynamicEntities.shouldUpdate(this.state)) {
+      this.state.dynamicEntities.onUpdate(this.state);
+    }
+
+    if (this.state.players.shouldUpdate(this.state)) {
+      this.state.players.onUpdate(this.state);
+    }
   }
 
   onLeave(client: Client, consented: boolean) {
@@ -46,6 +51,6 @@ export class MyRoom extends Room<WorldState> {
   }
 
   onDispose() {
-    console.log("room", this.roomId, "disposing...");
+    console.log("room", this.roomId, this.roomName, "disposing...");
   }
 }

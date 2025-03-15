@@ -10,10 +10,10 @@ export interface IUpdate {
 }
 
 export class DynamicEntity extends Entity implements IUpdate {
-  shouldBeDeleted: boolean;
+  shouldBeDeleted = false;
 
   @type(Health)
-  health = new Health();
+  health = new Health(100);
 
   shouldUpdate(world: WorldState): boolean {
     return !this.shouldBeDeleted;

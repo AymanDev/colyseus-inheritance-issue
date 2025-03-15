@@ -5,8 +5,6 @@ import { DynamicEntity } from "./dynamic";
 @entity
 export class SlimeEntity extends DynamicEntity {
   override onUpdate(world: WorldState): void {
-    super.onUpdate(world);
-
     const player = world.players.entities.values().toArray()[0];
 
     if (!player) {

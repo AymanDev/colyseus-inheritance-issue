@@ -10,9 +10,12 @@ public class StaticEntitiesManager : RemoteMapHandler<Entity>
 
     public override void Initialize()
     {
-        NetworkManager.Instance.Callbacks.Listen(state => state.staticEntities, (staticEntities, _) => {
-          NetworkManager.Instance.Callbacks.OnAdd(staticEntities, s => s.entities, OnAdded);
-          NetworkManager.Instance.Callbacks.OnAdd(staticEntities, s => s.entities, OnRemoved);
+        Debug.Log("Static map initialized");
+
+        NetworkManager.Instance.Callbacks.Listen(state => state.staticEntities, (staticEntities, _) =>
+        {
+            NetworkManager.Instance.Callbacks.OnAdd(staticEntities, s => s.entities, OnAdded);
+            NetworkManager.Instance.Callbacks.OnAdd(staticEntities, s => s.entities, OnRemoved);
         });
     }
 

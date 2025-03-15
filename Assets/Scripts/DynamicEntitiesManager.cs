@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Colyseus.Schema;
 using Scripts.Schemas;
 using UnityEngine;
 
@@ -17,12 +18,19 @@ public class DynamicEntitiesManager : RemoteMapHandler<Entity>
 
     public override void Initialize()
     {
-        NetworkManager.Instance.Callbacks.OnAdd(state => state.dynamicEntities.entities, OnAdded);
-        NetworkManager.Instance.Callbacks.OnRemove(state => state.dynamicEntities.entities, OnRemoved);
+        NetworkManager.Instance.Callbacks.Listen(state => state.dynamicEntities, (dynamicEntities, _) =>
+        {
+            // NetworkManager.Instance.Callbacks.OnChange(dynamicEntities, state => state.entities, OnChange);
+            
+            NetworkManager.Instance.Callbacks.OnAdd(dynamicEntities, state => state.entities, OnAdded);
+
+            NetworkManager.Instance.Callbacks.OnRemove(dynamicEntities, state => state.entities, OnRemoved);
+        });
     }
 
     public override void OnAdded(string key, Entity entity)
     {
+        Debug.Log($"Dynamic entity spawned {key}, {entity.uuid}");
         if (entity is not DynamicEntity dynamicEntity)
         {
             return;
