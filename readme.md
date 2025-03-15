@@ -1,5 +1,7 @@
 ﻿# Colyseus Inheritance Issue
 
+#### This is fixed solution, checkout master branch for issue
+
 ### Steps
 
 * `cd server && npm i && npm run start`
